@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,inital-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>预存款支付 -  $!config.title</title>
+<link href="$!webPath/resources/style/system/front/wap/css/weixin.css" rel="stylesheet" type="text/css" />
+<script src="$!webPath/resources/js/wap/jquery-1.8.3.min.js"></script>
+<script>
+function order_pay(pay_password){
+	if(pay_password){
+		jQuery("#pay_overly").show();
+	}else{
+		jQuery("#theForm").submit();
+	}
+}
+
+
+function va_pw(){
+var pw = jQuery("#pay_password").val();
+			jQuery.ajax({type:'POST',
+					url:'$!webPath/wap/va_pw.htm',
+					data:{"pw":pw},
+					success:function(data){
+						/*jQuery("#pay_password").hide();*/
+						if(data == "密码输入成功"){
+							jQuery("#theForm").submit();
+						}else{
+							jQuery("#pwError").show();
+						}
+					}
+					
+			})
+}
+
+</script>
+</head>
+
+<body style="-webkit-tap-highlight-color:rgba(0,0,0,0)">
+<div class="phone_hd"><a class="back" href="javascript:history.go(-1);"><img src="$!webPath/resources/style/system/front/default/images/weixin/back.png" width="25" height="25" /></a>预存款支付<a class="menu home" href="$!webPath/wap/index.htm"><img src="$!webPath/resources/style/system/front/default/images/weixin/home.png" width="25" height="25" /></a></div>
+<div class="mt50"></div>
+<div class="phone_main">
+<div class="info_form">
+  <form action="$!webPath/wap/order_pay_balance.htm" method="post" id="theForm">
+  <input type="hidden" name="order_id" id="order_id" value="$!{order_id}">
+  <input type="hidden" name="type" id="type" value="$!{type}">
+  <ul>
+    <li><span>付款金额：</span><span class="red">¥$!{order_total_price}</span></li>
+    <li>
+    	<span class="form_left">付款留言:</span>
+        <span class="form_right"><b class="form_area">
+      	<textarea name="pay_msg" cols="" rows=""></textarea>
+      	</b></span>
+    </li>
+    <li>
+    	<div class="notice">
+        	&nbsp;&nbsp;&nbsp;&nbsp;预存款留言有利于商家迅速辨别买家。
+        </div>
+    </li>
+    </ul>
+    #if(!$!newUser.pay_password)
+	<div class="set_key">还没有设置支付密码<a class="red_btn" href="$!webPath/wap/account_pay_password.htm">立即设置</a></div>
+    #end
+     <div class="red_submit"><a href="javascript:void(0);" onClick="order_pay('$!newUser.pay_password');" >支付</a></div>
+  
+  </form>
+</div>
+</div>
+
+
+<div class="pay_overly" style="display:none" id="pay_overly">
+	<div class="pay_key">
+    	<h2>输入密码</h2>
+        <span class="key_input"><input type="password" id="pay_password" /><label style="display:none" class="error" id="pwError">密码错误!请重新输入!</label></span>
+        <div class="red_submit"><a href="javascript:void(0);" onClick="va_pw();">确认</a></div>
+    	<a class="close" href="javascript:void(0);" onClick="javascript:jQuery('#pay_overly').hide();" ><img src="$!webPath/resources/style/system/front/default/images/weixin/close01.png" width="20" height="20" /></a>
+    </div>
+	<div class="black_bg"></div>
+</div>
+
+</body>
+</html>

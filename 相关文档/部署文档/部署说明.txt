@@ -1,0 +1,74 @@
+1.系统是J2EE企业应用，具有良好的跨平台能力，支持Windows、Linux、Unix环境；
+2.系统在Windows7的64位操作系统上开发和编译，使用64位的Jdk1.7，Tomcat7和Mysql5.5作为部署环境；
+3.注意，如果部署在32位操作系统下，需要使用Jdk1.7的32位版重新编译再部署；
+4.注意，如果部署在非Jdk1.7版本下，如Jdk1.8或Jdk1.6，需要使用对应的Jdk版本重新编译再部署；
+5.注意，如果部署在非Tomcat7版本下，首先需要保证Tomcat所需的Jdk版本正常安装或配置；
+
+一.Windows下部署
+Windows集成Java、Tomcat、Mysql环境JTM使用说明：
+1.将wemall_demo.rar解压缩，注意解压缩路径不要含有中文、特殊字符；
+2.运行JTM.bat，根据提示将tomcat和mysql注册成服务并启动；
+3.浏览器打开http://localhost:8080，检查是否正常启动；
+
+二.Linux下部署
+Mysql的Dockerfile文件
+=========Dockerfile begin=========
+FROM ubuntu:14.04
+
+# 签名
+MAINTAINER docker <docker@163.com>
+ENV REFRESHED_AT 2017-2-25
+RUN apt-get -yqq update
+RUN apt-get -y install mysql-server
+
+RUN /etc/init.d/mysql start \
+    && mysql -uroot -e "grant all privileges on *.* to 'root@%' identified by 'root123';"
+
+RUN sed -Ei 's/^(bind-address|log)/#&/' /etc/mysql/my.cnf \
+    && echo 'skip-host-cache\nskip-name-resolve' | awk '{ print } $1 == "[mysqld]" && c == 0 { c = 1; system("cat") }' /etc/mysql/my.cnf > /tmp/my.cnf \
+    && mv /tmp/my.cnf /etc/mysql/my.cnf
+
+# 容器开放3306端口
+EXPOSE 3306
+# 将数据data路径映射给宿主主机
+VOLUME ["/var/lib/mysql/"]
+# 设置启动容器时启动mysql
+ENTRYPOINT ["/usr/bin/mysqld_safe"]
+=========Dockerfile end=========
+生成images：docker build -t mysql .
+生成容器：docker run --name mysql -e MYSQL_ROOT_PASSWORD=root123 -v /home/mysql/data:/var/lib/mysql -d -p 3306:3306 镜像id
+
+Tomcat的Dockerfile文件
+=========Dockerfile begin=========
+FROM ubuntu:14.04 
+
+# 刷新包缓存 并且 安装wget工具
+RUN apt-get update && apt-get install -y wget
+# 设置工作目录
+WORKDIR /home
+# 安装jdk
+RUN wget --no-cookies --no-check-certificate --header "Cookie:gpw_e24=http%3a%2f%2fwww.oracle.com%2ftechnetwork%2fjava%2fjavase%2fdownloads%2fjdk7-downloads-1880260.html;oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/7u79-b15/jdk-7u79-linux-x64.tar.gz
+RUN tar -zxf jdk-7u79-linux-x64.tar.gz
+
+# 配置环境变量
+ENV JAVA_HOME /home/jdk1.7.0_79
+ENV JRE_HOME $JAVA_HOME/jre
+ENV CLASSPATH .:$JAVA_HOME/lib:$JRE_HOME/lib
+ENV PATH $PATH:$JAVA_HOME/bin
+
+# 安装 tomcat8
+#RUN apt-get update
+RUN wget http://mirrors.hust.edu.cn/apache/tomcat/tomcat-8/v8.5.14/bin/apache-tomcat-8.5.14.tar.gz
+RUN tar xvf apache-tomcat-8.5.13.tar.gz
+
+# 配置tomcat的环境变量
+ENV CATALINA_HOME /home/apache-tomcat-8.5.13
+
+# 容器需要开放Tomcat 8080端口
+EXPOSE 8080
+
+#设置tomcat 自启动
+CMD [ "/home/apache-tomcat-8.5.13/bin/catalina.sh", "run" ]
+===================Dockerfile end=============
+生成images：docker build -t tomcat:8.0 .
+生成容器：docker run --name tomcat_wemall -d -p 8080:8080 --link mysql:mysql -v /home/tomcat/wemall/webapps:/home/apache-tomcat-8.5.13/webapps 镜像id

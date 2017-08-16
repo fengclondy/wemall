@@ -1,0 +1,8 @@
+/applicationContext-configuration.xml
+/applicationContext-security.xml
+/com/
+/ehcache.xml
+/jdbc.properties
+/log4j.properties
+/memcached.properties
+/persistence.xml
