@@ -1,17 +1,17 @@
-°²×°memcached£º
-1. ½âÑ¹memcached-win64-1.4.4-14µÄÎÄ¼þ£¬°ÑËü·Åµ½Ò»¸öÄ¿Â¼ÖÐ£¬ÈçD:\memcached¡£
-2. ´ò¿ªcmd£¬½øÈëmemcached½âÑ¹ºó´æ·ÅµÄÄ¿Â¼£¬ÔËÐÐÃüÁî£º
+å®‰è£…memcachedï¼š
+1. è§£åŽ‹memcached-win64-1.4.4-14çš„æ–‡ä»¶ï¼ŒæŠŠå®ƒæ”¾åˆ°ä¸€ä¸ªç›®å½•ä¸­ï¼Œå¦‚D:\memcachedã€‚
+2. æ‰“å¼€cmdï¼Œè¿›å…¥memcachedè§£åŽ‹åŽå­˜æ”¾çš„ç›®å½•ï¼Œè¿è¡Œå‘½ä»¤ï¼š
    memcached.exe -d install
-   Èç¹ûÃ»ÓÐÒâÍâµÄ»°ÒÑ¾­°²×°³É¹¦ÁË¡£
-  £¨Ä¿Â¼ÖÐÓ¦¸ÃÓÐmemcached.exeÕâ¸öÎÄ¼þ£©
-3. ²âÊÔÊÇ·ñ°²×°³É¹¦£º
-   ´ò¿ªcmd£¬½øÈëmemcached½âÑ¹ºó´æ·ÅµÄÄ¿Â¼£¬ÔËÐÐÃüÁî£º
-   memcached -h£¬Èô°²×°³É¹¦£¬»áÌáÊ¾memcachedµÄ°ïÖúÐÅÏ¢
-4. Æô¶¯memcached£º
-  ´ò¿ªcmd£¬½øÈëmemcached½âÑ¹ºó´æ·ÅµÄÄ¿Â¼£¬ÔËÐÐÃüÁî£º
+   å¦‚æžœæ²¡æœ‰æ„å¤–çš„è¯å·²ç»å®‰è£…æˆåŠŸäº†ã€‚
+  ï¼ˆç›®å½•ä¸­åº”è¯¥æœ‰memcached.exeè¿™ä¸ªæ–‡ä»¶ï¼‰
+3. æµ‹è¯•æ˜¯å¦å®‰è£…æˆåŠŸï¼š
+   æ‰“å¼€cmdï¼Œè¿›å…¥memcachedè§£åŽ‹åŽå­˜æ”¾çš„ç›®å½•ï¼Œè¿è¡Œå‘½ä»¤ï¼š
+   memcached -hï¼Œè‹¥å®‰è£…æˆåŠŸï¼Œä¼šæç¤ºmemcachedçš„å¸®åŠ©ä¿¡æ¯
+4. å¯åŠ¨memcachedï¼š
+  æ‰“å¼€cmdï¼Œè¿›å…¥memcachedè§£åŽ‹åŽå­˜æ”¾çš„ç›®å½•ï¼Œè¿è¡Œå‘½ä»¤ï¼š
   memcached.exe -d start
-  ÕâÊ±memcachedÒÑ¾­Æô¶¯£¬ÔÚÈÎÎñ¹ÜÀíÆ÷ÖÐ¿ÉÒÔ¿´µ½Õâ¸ö½ø³Ì
-5. Á¬½ÓMemcached£º
-  ´ò¿ªcmd£¬ÔËÐÐÃüÁî£º
+  è¿™æ—¶memcachedå·²ç»å¯åŠ¨ï¼Œåœ¨ä»»åŠ¡ç®¡ç†å™¨ä¸­å¯ä»¥çœ‹åˆ°è¿™ä¸ªè¿›ç¨‹
+5. è¿žæŽ¥Memcachedï¼š
+  æ‰“å¼€cmdï¼Œè¿è¡Œå‘½ä»¤ï¼š
   telnet 127.0.0.1 11211
-  ¼´¿ÉÁ¬½ÓMemcached
+  å³å¯è¿žæŽ¥Memcached
